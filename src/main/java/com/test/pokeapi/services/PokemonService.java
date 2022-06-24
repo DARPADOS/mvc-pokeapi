@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.test.pokeapi.dto.NamedApiResourceList;
-import com.test.pokeapi.dto.PageSpecieDto;
 import com.test.pokeapi.dto.SpecieDTO;
 
 @Service
@@ -20,12 +23,13 @@ public class PokemonService {
 		this.restTemplate = restTemplateBuilder.build();
 	}
 
-  public PageSpecieDto listPokemons(Integer offset, Integer limit) {
+  public Page<SpecieDTO> listPokemons(Pageable pageable) {
 
-    if(offset == null) offset = 0;
-    if(limit == null) limit = 20;
+    int pageSize = pageable.getPageSize();
+    int currentPage = pageable.getPageNumber() -1;
+    int offset = pageSize * (currentPage);
     
-    String url = "https://pokeapi.co/api/v2/pokemon-species/?offset=" + offset + "&limit=" + limit;
+    String url = "https://pokeapi.co/api/v2/pokemon-species/?offset=" + offset + "&limit=" + pageSize;
 
     NamedApiResourceList response = restTemplate.getForObject(url, NamedApiResourceList.class);
 
@@ -35,15 +39,12 @@ public class PokemonService {
       String[] urlParts = poke.getUrl().split("/");
 
       specie.setId(Integer.parseInt(urlParts[urlParts.length-1]));
-      specie.setName(poke.getName());
+      specie.setName(poke.getName().substring(0, 1).toUpperCase() + poke.getName().substring(1));
       return specie;
     }).collect(Collectors.toList());
 
-    PageSpecieDto pageSpecieDto = new PageSpecieDto();
-    pageSpecieDto.setLimit(limit);
-    pageSpecieDto.setOffset(offset);
-    pageSpecieDto.setPokemons(pokemons);
+    Page<SpecieDTO> pokePage = new PageImpl<SpecieDTO>(pokemons, PageRequest.of(currentPage, pageSize), response.getCount());
 
-    return pageSpecieDto;
+    return pokePage;
   }
 }
