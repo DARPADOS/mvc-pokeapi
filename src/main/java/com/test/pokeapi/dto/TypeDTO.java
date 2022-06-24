@@ -1,23 +1,35 @@
 package com.test.pokeapi.dto;
 
+import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.test.pokeapi.model.Type;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TypeDTO {
-  private Integer id;
-  private String Name;
+  private Integer slot;
+  private Type name;
 
-  public Integer getId() {
-    return id;
+  @JsonProperty("type")
+  private void unpackNameFromNestedObject(Map<String, String> type) {
+    name = Type.valueOf(type.get("name"));
   }
-  public void setId(Integer id) {
-    this.id = id;
+
+  public Integer getSlot() {
+    return slot;
   }
-  public String getName() {
-    return Name;
+
+  public void setSlot(Integer slot) {
+    this.slot = slot;
   }
-  public void setName(String name) {
-    Name = name;
+
+  public Type getName() {
+    return name;
   }
-  
+
+  public void setName(Type name) {
+    this.name = name;
+  }
+
 }

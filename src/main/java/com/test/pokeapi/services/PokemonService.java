@@ -61,10 +61,6 @@ public class PokemonService {
 
     pokeDetail.setSpecie(pokeSpecie);
 
-    System.out.println(pokeDetail);
-
     return pokeDetail;
-
   }
-
 }
