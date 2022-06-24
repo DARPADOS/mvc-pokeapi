@@ -7,8 +7,6 @@ public class SpecieDTO {
   private Integer id;
   private String name;
 
-  private NamedApiResource evolutionChain;
-
   public Integer getId() {
     return id;
   }
@@ -25,11 +23,4 @@ public class SpecieDTO {
     this.name = name;
   }
 
-  public NamedApiResource getEvolutionChain() {
-    return evolutionChain;
-  }
-
-  public void setEvolutionChain(NamedApiResource evolutionChain) {
-    this.evolutionChain = evolutionChain;
-  } 
 }

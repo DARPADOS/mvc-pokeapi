@@ -29,7 +29,15 @@ public class PokemonService {
 
     NamedApiResourceList response = restTemplate.getForObject(url, NamedApiResourceList.class);
 
-    List<SpecieDTO> pokemons = response.getResults().stream().map((poke) -> restTemplate.getForObject(poke.getUrl(), SpecieDTO.class)).collect(Collectors.toList());
+    List<SpecieDTO> pokemons = response.getResults().stream().map((poke) -> {
+      SpecieDTO specie = new SpecieDTO();
+
+      String[] urlParts = poke.getUrl().split("/");
+
+      specie.setId(Integer.parseInt(urlParts[urlParts.length-1]));
+      specie.setName(poke.getName());
+      return specie;
+    }).collect(Collectors.toList());
 
     PageSpecieDto pageSpecieDto = new PageSpecieDto();
     pageSpecieDto.setLimit(limit);

@@ -15,7 +15,7 @@
       </div>
       <div class="grid grid-flow-row grid-cols-5 gap-5">
         <div th:each="pokemon: ${response.pokemons}" class="bg-white rounded-md shadow-md p-6 flex flex-col justify-items-center gap-2">
-          <img th:attr="src=@{|https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png|}" alt="">
+          <img loading="lazy" th:attr="src=@{|https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png|}" alt="">
           <div>
             <p th:text="${pokemon.name}" class="font-semibold text-xl text-center"></p>
           </div>
