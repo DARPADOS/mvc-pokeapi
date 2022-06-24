@@ -61,7 +61,10 @@ public class SpecieDTO {
   public void setIsMythical(Boolean isMythical) {
     this.isMythical = isMythical;
   }
-
-  
-
+  @Override
+  public String toString() {
+    return "SpecieDTO [baseHappines=" + baseHappines + ", evolutionChain=" + evolutionChain + ", habitat=" + habitat
+        + ", id=" + id + ", isBaby=" + isBaby + ", isLegendary=" + isLegendary + ", isMythical=" + isMythical
+        + ", name=" + name + "]";
+  }
 }

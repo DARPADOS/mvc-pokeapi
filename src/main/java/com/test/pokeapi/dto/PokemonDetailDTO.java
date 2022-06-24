@@ -64,5 +64,10 @@ public class PokemonDetailDTO {
   public void setTypes(List<TypeDTO> types) {
     this.types = types;
   }
+  @Override
+  public String toString() {
+    return "PokemonDetailDTO [abilities=" + abilities + ", height=" + height + ", id=" + id + ", name=" + name
+        + ", specie=" + specie + ", stats=" + stats + ", types=" + types + ", weight=" + weight + "]";
+  }
 
 }

@@ -13,6 +13,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.test.pokeapi.dto.NamedApiResourceList;
 import com.test.pokeapi.dto.PokemonDTO;
+import com.test.pokeapi.dto.PokemonDetailDTO;
+import com.test.pokeapi.dto.SpecieDTO;
 
 @Service
 public class PokemonService {
@@ -47,4 +49,22 @@ public class PokemonService {
 
     return pokePage;
   }
+
+  public PokemonDetailDTO getPokemonDetail(String id){
+
+    String pokeDetailURL = "https://pokeapi.co/api/v2/pokemon/" + id;
+    String pokeSpecieURL = "https://pokeapi.co/api/v2/pokemon-species/" + id;
+
+    PokemonDetailDTO pokeDetail = restTemplate.getForObject(pokeDetailURL, PokemonDetailDTO.class);
+
+    SpecieDTO pokeSpecie = restTemplate.getForObject(pokeSpecieURL, SpecieDTO.class);
+
+    pokeDetail.setSpecie(pokeSpecie);
+
+    System.out.println(pokeDetail);
+
+    return pokeDetail;
+
+  }
+
 }

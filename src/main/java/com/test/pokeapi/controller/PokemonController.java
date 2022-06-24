@@ -11,10 +11,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.test.pokeapi.dto.PokemonDTO;
+import com.test.pokeapi.dto.PokemonDetailDTO;
 import com.test.pokeapi.services.PokemonService;
 
 @Controller()
@@ -37,5 +39,14 @@ public class PokemonController {
     model.addAttribute("pageNumbers", pageNumbers);
     model.addAttribute("response", pokePage);
     return "index";
+  }
+  
+  @GetMapping("/pokemon/{id}")
+  public String getPokemonDetail(Model model, @PathVariable("id") String id){
+    PokemonDetailDTO pokeDetail = pokemonService.getPokemonDetail(id);
+
+    model.addAttribute("pokeDetail", pokeDetail);
+
+    return "pokeDetail";
   }
 }
