@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.test.pokeapi.dto.NamedApiResourceList;
-import com.test.pokeapi.dto.SpecieDTO;
+import com.test.pokeapi.dto.PokemonDTO;
 
 @Service
 public class PokemonService {
@@ -23,7 +23,7 @@ public class PokemonService {
 		this.restTemplate = restTemplateBuilder.build();
 	}
 
-  public Page<SpecieDTO> listPokemons(Pageable pageable) {
+  public Page<PokemonDTO> listPokemons(Pageable pageable) {
 
     int pageSize = pageable.getPageSize();
     int currentPage = pageable.getPageNumber() -1;
@@ -33,8 +33,8 @@ public class PokemonService {
 
     NamedApiResourceList response = restTemplate.getForObject(url, NamedApiResourceList.class);
 
-    List<SpecieDTO> pokemons = response.getResults().stream().map((poke) -> {
-      SpecieDTO specie = new SpecieDTO();
+    List<PokemonDTO> pokemons = response.getResults().stream().map((poke) -> {
+      PokemonDTO specie = new PokemonDTO();
 
       String[] urlParts = poke.getUrl().split("/");
 
@@ -43,7 +43,7 @@ public class PokemonService {
       return specie;
     }).collect(Collectors.toList());
 
-    Page<SpecieDTO> pokePage = new PageImpl<SpecieDTO>(pokemons, PageRequest.of(currentPage, pageSize), response.getCount());
+    Page<PokemonDTO> pokePage = new PageImpl<PokemonDTO>(pokemons, PageRequest.of(currentPage, pageSize), response.getCount());
 
     return pokePage;
   }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.test.pokeapi.dto.SpecieDTO;
+import com.test.pokeapi.dto.PokemonDTO;
 import com.test.pokeapi.services.PokemonService;
 
 @Controller()
@@ -28,7 +28,7 @@ public class PokemonController {
     int currentPage = page.orElse(1);
     int pageSize = size.orElse(20);
 
-    Page<SpecieDTO> pokePage = pokemonService.listPokemons(PageRequest.of(currentPage, pageSize));
+    Page<PokemonDTO> pokePage = pokemonService.listPokemons(PageRequest.of(currentPage, pageSize));
 
     List<Integer> pageNumbers = IntStream.rangeClosed(1, pokePage.getTotalPages())
     .boxed()
