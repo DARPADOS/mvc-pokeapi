@@ -3,6 +3,7 @@ package com.test.pokeapi.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,6 +15,10 @@ import com.test.pokeapi.dto.SpecieDTO;
 public class PokemonService {
   
   private RestTemplate restTemplate;
+
+  public PokemonService(RestTemplateBuilder restTemplateBuilder) {
+		this.restTemplate = restTemplateBuilder.build();
+	}
 
   public PageSpecieDto listPokemons(Integer offset, Integer limit) {
 
@@ -33,5 +38,4 @@ public class PokemonService {
 
     return pageSpecieDto;
   }
-
 }

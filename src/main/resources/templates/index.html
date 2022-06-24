@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-sky-200">
+
+    <main class="w-4/6 mx-auto my-6">
+      <div class="flex justify-center py-5">
+        <img src="/img/logo.png" />
+      </div>
+      <div class="grid grid-flow-row grid-cols-5 gap-5">
+        <div th:each="pokemon: ${response.pokemons}" class="bg-white rounded-md shadow-md p-6 flex flex-col justify-items-center gap-2">
+          <img th:attr="src=@{|https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png|}" alt="">
+          <div>
+            <p th:text="${pokemon.name}" class="font-semibold text-xl text-center"></p>
+          </div>
+          <div>
+            <p th:text="'#'+ ${#numbers.formatInteger(pokemon.id,3)}" class="font-semibold text-lg text-center text-gray-500 italic"></p>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center py-7">
+        <div th:if="${response.offset != 0}">
+          <a th:href="@{'/?offset='+${response.offset - response.limit}+'&limit='+${response.limit}}" class="block px-6 py-2 mx-3 bg-indigo-500 rounded-md shadow-md hover:bg-indigo-700 text-white text-xl w-32 text-center">Previous</a>
+        </div>
+        <div >
+          <a th:href="@{'/?offset='+${response.offset + response.limit}+'&limit='+${response.limit}}" class="block px-6 py-2 mx-3 bg-indigo-500 rounded-md shadow-md hover:bg-indigo-700 text-white text-xl w-32 text-center">Next</a>
+        </div>
+      </div>
+    </main>
+    </p>
+  </body>
+
+</html>

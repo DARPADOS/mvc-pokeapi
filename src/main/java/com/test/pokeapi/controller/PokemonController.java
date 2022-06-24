@@ -17,7 +17,7 @@ public class PokemonController {
   PokemonService pokemonService;
 
   @GetMapping
-  public String listPokemons(Model model, @RequestParam(name="offset") Integer offset, @RequestParam(name = "limit") Integer limit){
+  public String listPokemons(Model model, @RequestParam(name="offset", required = false) Integer offset, @RequestParam(name = "limit", required = false) Integer limit){
     PageSpecieDto pageSpecieDto = pokemonService.listPokemons(offset, limit);
 
     model.addAttribute("response", pageSpecieDto);
