@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+  </head>
+
+  <body class="bg-sky-200 h-screen py-6">
+
+    <main class="mx-5 lg:w-4/6 max-h-max lg:mx-auto bg-white rounded-2xl shadow-md font-mono">
+      <div class="grid grid-flow-col grid-cols-3 gap-1 text-white text-3xl font-semibold text-center shadow-lg">
+        <div class="block flex-row bg-sky-600 hover:bg-sky-700 rounded-tl-md py-3 relative">
+          <i class="arrow align-middle"></i> 
+          <a th:href="@{|/pokemon/${pokeDetail.id - 1}|}" class="align-middle after:absolute after:inset-0" >Previus</a>
+        </div>
+        <div class="block bg-sky-600 hover:bg-sky-700 py-3 relative">
+          <i class="pokeball align-middle"></i>
+          <a th:href="@{/}" class="align-middle after:absolute after:inset-0"> Pokemons</a>
+        </div>
+        <div class="block bg-sky-600 hover:bg-sky-700 rounded-tr-md py-3 relative">
+          <a th:href="@{|/pokemon/${pokeDetail.id + 1}|}" class="align-middle after:absolute after:inset-0" >Next</a>
+          <i class="arrow rotate-180 align-middle"></i>
+        </div>
+      </div>
+      <div class="text-center text-3xl py-4 font-semibold font-mono">
+        <h1 th:text="${pokeDetail.name}"></h1>
+        <p class="italic text-gray-600" th:text="'#' + ${#numbers.formatInteger(pokeDetail.id,3)}"></p>
+      </div>
+      <div class="flex flex-row py-2">
+        <div class="px-4 flex justify-center basis-1/2">
+          <div class="blob h-full">
+            <img class="w-full aspect-square" th:attr="src=@{|https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeDetail.id}.png|}" alt="">
+          </div>
+        </div>
+        <div class="basis-1/2" >
+          <div class="grid grid-cols-2 gap-3 text-xl rounded-md shadow-lg bg-stone-300 px-5 py-3 mx-5 font-bold">
+            <div class="m-2">
+              <p class="pb-2">Height</p>
+              <p th:text="${pokeDetail.height/10} + ' m'"></p>
+            </div>
+            <div class="m-2">
+              <p class="pb-2">Weight</p>
+              <p class="font-bold" th:text="${pokeDetail.weight/10} + ' kg'"></p>
+            </div>
+            <div class="m-2">
+              <p class="pb-2">Abilities</p>
+              <div th:each="ability : ${pokeDetail.abilities}">
+                <div class="box-content flex flex-row justify-between bg-zinc-600 px-3 w-40 py-1 rounded-lg text-lg text-center text-white shadow-md my-2">
+                  <p th:text="${ability.name}"></p> <i th:if="${ability.isHidden}" class="hide"></i>
+                </div>
+
+              </div >
+            </div>
+            <div class="m-2">
+              <p class="pb-2">Type</p>
+              <div class="text-white text-center">
+                <p class="block box-content w-28 px-7 py-1 rounded-lg shadow-md my-2" th:each="type : ${pokeDetail.types}" th:text="${type.name}" th:attr="style='background-color: '+${type.name.color}"><i class="fa-solid fa-eye-slash"></i></p>
+              </div >
+            </div>
+          </div>
+
+          <div class="flex flex-col justify-center text-center rounded-md shadow-lg bg-slate-300 m-5 py-3">
+            <h2 class="text-xl font-semibold mb-2">Base Stats</h2>
+            <div th:each="stat : ${pokeDetail.stats}" class="w-full my-1 flex flex-row justify-center">
+              <div th:text="${stat.name} + ': '" class="w-40 text-right pr-3"></div>          
+              <div class="w-3/5 bg-white rounded-full h-2.5 basis-1/3  mt-2">
+                <div class="bg-blue-400 h-2.5 rounded-full" th:attr="style='width:  '+ ${100*stat.baseStat/255} + '%'" style="width: 45%"></div>
+              </div>
+              <div th:text="${stat.baseStat} + '/255'" class="w-20"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="flex flex-col justify-center text-center">
+        <h2 class="text-xl font-semibold mb-2">Evolution Chain</h2>
+      </div>
+      <div>
+      </div>
+    </main>
+  </body>
+  
+</html>

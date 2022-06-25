@@ -1,5 +1,39 @@
-.stretched-link::after {
-  content: "";
-  @apply z-10 absolute inset-0 bg-transparent pointer-events-auto;
+
+* {
+  box-sizing: content-box;
+  border: 0.3px solid red;
+  border-width:thin
 }
 
+.arrow {
+  background: url('/svg/arrow.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
+
+.hide {
+  background: url('/svg/eye-hide.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+}
+
+.blob {
+  background: url('/svg/blob.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.pokeball {
+  background: url('/svg/pokeball.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
