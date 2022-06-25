@@ -14,6 +14,16 @@
   width: 40px;
 }
 
+.arrow-2 {
+  background: url('/svg/arrow2.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
+
+
 .hide {
   background: url('/svg/eye-hide.svg');
   background-repeat: no-repeat;

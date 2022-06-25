@@ -9,9 +9,9 @@
 
   </head>
 
-  <body class="bg-sky-200 h-screen py-6">
+  <body class="bg-sky-200 h-max py-6">
 
-    <main class="mx-5 lg:w-4/6 max-h-max lg:mx-auto bg-white rounded-2xl shadow-md font-mono">
+    <main class="mx-5 lg:w-4/6 max-h-max lg:mx-auto bg-white rounded-2xl shadow-md font-mono pb-5">
       <div class="grid grid-flow-col grid-cols-3 gap-1 text-white text-3xl font-semibold text-center shadow-lg">
         <div class="block flex-row bg-sky-600 hover:bg-sky-700 rounded-tl-md py-3 relative">
           <i class="arrow align-middle"></i> 
@@ -27,17 +27,17 @@
         </div>
       </div>
       <div class="text-center text-3xl py-4 font-semibold font-mono">
-        <h1 th:text="${pokeDetail.name}"></h1>
+        <h1 th:text="${pokeDetail.name}" class="first-letter:capitalize"></h1>
         <p class="italic text-gray-600" th:text="'#' + ${#numbers.formatInteger(pokeDetail.id,3)}"></p>
       </div>
-      <div class="flex flex-row py-2">
+      <div class="flex flex-row pt-2">
         <div class="px-4 flex justify-center basis-1/2">
           <div class="blob h-full">
             <img class="w-full aspect-square" th:attr="src=@{|https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeDetail.id}.png|}" alt="">
           </div>
         </div>
         <div class="basis-1/2" >
-          <div class="grid grid-cols-2 gap-3 text-xl rounded-md shadow-lg bg-stone-300 px-5 py-3 mx-5 font-bold">
+          <div class="grid grid-cols-2 gap-3 text-xl rounded-md shadow-lg bg-green-200 px-5 py-3 mx-5 font-bold">
             <div class="m-2">
               <p class="pb-2">Height</p>
               <p th:text="${pokeDetail.height/10} + ' m'"></p>
@@ -50,7 +50,7 @@
               <p class="pb-2">Abilities</p>
               <div th:each="ability : ${pokeDetail.abilities}">
                 <div class="box-content flex flex-row justify-between bg-zinc-600 px-3 w-40 py-1 rounded-lg text-lg text-center text-white shadow-md my-2">
-                  <p th:text="${ability.name}"></p> <i th:if="${ability.isHidden}" class="hide"></i>
+                  <p th:text="${ability.name}" class="first-letter:capitalize"></p> <i th:if="${ability.isHidden}" class="hide"></i>
                 </div>
 
               </div >
@@ -63,7 +63,7 @@
             </div>
           </div>
 
-          <div class="flex flex-col justify-center text-center rounded-md shadow-lg bg-slate-300 m-5 py-3">
+          <div class="flex flex-col justify-center text-center rounded-md shadow-lg bg-amber-200 px-5 py-3 mx-5 mt-5">
             <h2 class="text-xl font-semibold mb-2">Base Stats</h2>
             <div th:each="stat : ${pokeDetail.stats}" class="w-full my-1 flex flex-row justify-center">
               <div th:text="${stat.name} + ': '" class="w-40 text-right pr-3"></div>          
@@ -77,10 +77,31 @@
         </div>
       </div>
 
-      <div class="flex flex-col justify-center text-center">
-        <h2 class="text-xl font-semibold mb-2">Evolution Chain</h2>
-      </div>
-      <div>
+        <div class="flex flex-col justify-center text-center rounded-md shadow-lg bg-slate-300 px-5 py-3 mx-5 mt-5">
+          <h2 class="text-xl font-semibold mb-2">Evolution Chain</h2>
+          <div class="flex flex-row justify-center py-3">
+            <div th:each="layer, layerStat : ${pokeDetail.evolution.pokemons}"  class="flex flex-row items-center">
+              <div>
+                <i class="arrow-2 -rotate-90" th:if="${!layerStat.first}"></i>
+              </div>
+              <div class="grid" th:classappend="${layer.size() >=3 ? 'grid-cols-3' : 'grid-cols-1'}">
+                <div th:each="poke, pokeStat : ${layer}" class="w-44 relative border border-slate-700 rounded-md shadow-md p-3 m-2 bg-blue-100">
+                  <div class="blob">
+                    <img loading="lazy" th:attr="src=@{|https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${poke.id}.png|}" alt="">
+                  </div>
+                  <div>
+                    <p th:text="${poke.name}" class="font-semibold text-xl text-center first-letter:capitalize"></p>
+                  </div>
+                  <div>
+                    <p th:text="'#'+ ${#numbers.formatInteger(poke.id,3)}" class="font-semibold text-lg text-center text-gray-500 italic"></p>
+                  </div>
+                  <a th:href="@{|/pokemon/${poke.id}|}" class="after:absolute after:inset-0"></a>
+                </div>         
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
       </div>
     </main>
   </body>

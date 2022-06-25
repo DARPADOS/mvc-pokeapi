@@ -14,6 +14,15 @@ public class PokemonDetailDTO {
   private List<TypeDTO> types;
   private List<AbilityDTO> abilities;
   private SpecieDTO specie;
+  private EvolutionDTO evolution;
+
+  public EvolutionDTO getEvolution() {
+    return evolution;
+  }
+
+  public void setEvolution(EvolutionDTO evolution) {
+    this.evolution = evolution;
+  }
 
   public List<AbilityDTO> getAbilities() {
     return abilities;

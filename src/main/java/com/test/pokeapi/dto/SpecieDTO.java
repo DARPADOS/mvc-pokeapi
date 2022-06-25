@@ -1,7 +1,10 @@
 package com.test.pokeapi.dto;
 
+import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SpecieDTO {
@@ -9,8 +12,7 @@ public class SpecieDTO {
   private String name;
   @JsonAlias("base_happiness")
   private Integer baseHappines;
-  @JsonAlias("evolution_chain")
-  private NamedApiResource evolutionChain;
+  private String evolutionChainUrl;
   private NamedApiResource habitat;
   @JsonAlias("is_baby")
   private Boolean isBaby;
@@ -18,6 +20,11 @@ public class SpecieDTO {
   private Boolean isLegendary;
   @JsonAlias("is_mythical")
   private Boolean isMythical;
+
+  @JsonProperty("evolution_chain")
+  private void unpackNameFromNestedObject(Map<String, String> specie) {
+    evolutionChainUrl = specie.get("url");
+  }
 
   public Integer getId() {
     return id;
@@ -43,12 +50,12 @@ public class SpecieDTO {
     this.baseHappines = baseHappines;
   }
 
-  public NamedApiResource getEvolutionChain() {
-    return evolutionChain;
+  public String getEvolutionChainUrl() {
+    return evolutionChainUrl;
   }
 
-  public void setEvolutionChain(NamedApiResource evolutionChain) {
-    this.evolutionChain = evolutionChain;
+  public void setEvolutionChainUrl(String evolutionChainUrl) {
+    this.evolutionChainUrl = evolutionChainUrl;
   }
 
   public NamedApiResource getHabitat() {
@@ -83,10 +90,4 @@ public class SpecieDTO {
     this.isMythical = isMythical;
   }
 
-  @Override
-  public String toString() {
-    return "SpecieDTO [baseHappines=" + baseHappines + ", evolutionChain=" + evolutionChain + ", habitat=" + habitat
-        + ", id=" + id + ", isBaby=" + isBaby + ", isLegendary=" + isLegendary + ", isMythical=" + isMythical
-        + ", name=" + name + "]";
-  }
 }
