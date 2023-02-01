@@ -8,10 +8,10 @@
 		<version>2.7.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.test</groupId>
-	<artifactId>poke-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>poke-api</name>
+	<groupId>com.poke-api</groupId>
+	<artifactId>poke-app</artifactId>
+	<version>1.0.0</version>
+	<name>poke-app</name>
 	<description>Technical test using pokeapi</description>
 	<properties>
 		<java.version>17</java.version>
@@ -43,8 +43,9 @@
 			<version>2.7.1</version>
 		</dependency>
 	</dependencies>
-
+	<packaging>jar</packaging>
 	<build>
+	  <finalName>poke-app</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

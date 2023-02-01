@@ -62,6 +62,7 @@ public class PokemonService {
     SpecieDTO pokeSpecie = restTemplate.getForObject(pokeSpecieURL, SpecieDTO.class);
 
     EvolutionDTO evolution = restTemplate.getForObject(pokeSpecie.getEvolutionChainUrl(), EvolutionDTO.class);
+
     evolution.setupPOkemonList();
     pokeDetail.setEvolution(evolution);
     pokeDetail.setSpecie(pokeSpecie);
